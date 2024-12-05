@@ -1,0 +1,24 @@
+.navbar {
+    display: flex;
+    background-color: #161b22;
+    padding: 10px 20px;
+  }
+  
+  .navbar ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px;
+  }
+  
+  .navbar ul li {
+    color: #c9d1d9;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar ul li:hover {
+    color: #58a6ff;
+  }
+  

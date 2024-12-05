@@ -1,0 +1,104 @@
+.app-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .filter-buttons button {
+    margin: 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .task-input {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .input-field {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .add-button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .task-container {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .task-card {
+    padding: 15px;
+    background-color: #ecf0f1;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 200px; 
+    font-size: 14px; 
+    text-align: center;
+  }
+  
+  .task-card h3 {
+    margin-top: 0;
+    font-size: 16px; 
+  }
+  
+  .edit-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #f39c12;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;  
+  }
+  
+  .delete-button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #e74c3c;
+    color: white;
+    cursor: pointer;
+  }
+  
