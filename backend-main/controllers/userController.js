@@ -20,7 +20,8 @@ async function connectClient() {
 }
 
 async function signup(req, res) {
-  const { username, password, email } = req.body;
+  const { username, password, email, role } = req.body;
+
   try {
     await connectClient();
     const db = client.db("software");
@@ -37,19 +38,21 @@ async function signup(req, res) {
     const newUser = {
       username,
       password: hashedPassword,
-      email
+      email,
+      role,
     };
 
     const result = await usersCollection.insertOne(newUser);
 
     const token = jwt.sign(
-      { id: result.insertId },
+      { id: result.insertedId, role },
       process.env.JWT_SECRET_KEY,
       { expiresIn: "1h" }
     );
-    res.json({ token, userId: result.insertId });
+
+    return res.json({ token, userId: result.insertedId, role });
   } catch (err) {
-    console.error("Error during signup : ", err.message);
+    console.error("Error during signup: ", err.message);
     res.status(500).send("Server error");
   }
 }
@@ -71,7 +74,7 @@ async function login(req, res) {
       return res.status(400).json({ message: "Invalid credentials!" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user._id ,role:user.role}, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
     res.json({ token, userId: user._id });

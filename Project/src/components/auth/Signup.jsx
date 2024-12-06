@@ -8,6 +8,8 @@ import "./Signup.css";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,9 +28,12 @@ const Signup = () => {
         email: email,
         password: password,
         username: username,
+        role:role
       });
+      console.log(res);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
+      localStorage.setItem("role",res.data.role);
       setCurrentUser(res.data.userId);
       setLoading(false);
       window.location.href = "/";
@@ -59,6 +64,15 @@ const Signup = () => {
                   <div className="w-full mb-4">
                     <MDBInput
                       placeholder="Role"
+                      type="text"
+                      className="block border border-grey-light w-full p-3 rounded"
+                      value={role}
+                      onChange={(e) => setRole(e.target.value)}
+                    />
+                  </div>
+                  <div className="w-full mb-4">
+                  <MDBInput
+                      placeholder="username"
                       type="text"
                       className="block border border-grey-light w-full p-3 rounded"
                       value={username}
