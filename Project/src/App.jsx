@@ -102,13 +102,7 @@ const Header = ({ isAuthenticated, userRole, onLogout }) => {
                 Contact us
               </Link>
             </li>
-            {isAuthenticated ? (
-              <>
-                <li className="nav-item">
-                  <span className="nav-link text-white">
-                    {`Logged in as: ${userRole}`}
-                  </span>
-                </li>
+
                 <li className="nav-item">
                   <button
                     className="btn nav-link"
@@ -118,9 +112,9 @@ const Header = ({ isAuthenticated, userRole, onLogout }) => {
                     Log Out
                   </button>
                 </li>
-              </>
-            ) : (
-              <>
+          
+          
+             
                 <li className="nav-item">
                   <Link className="nav-link" to="/auth" style={{ color: 'white' }}>
                     Sign In
@@ -149,8 +143,8 @@ const Header = ({ isAuthenticated, userRole, onLogout }) => {
                     </div>
                   )}
                 </li>
-              </>
-            )}
+          
+           
           </ul>
         </div>
       </div>
