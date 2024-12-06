@@ -7,32 +7,27 @@ import ProjectRoutes from './Routes';
 const App = () => {
   const [showWelcome, setShowWelcome] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isEmp, setIsEmp] = useState(false);
-  const [isPm, setIsPm] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const authState = localStorage.getItem('authenticated') === 'true';
+    console.log(authState)
     const role = localStorage.getItem('role');
-  
-    if (token && role) {
-      setIsAuthenticated(true);
-  
+    setIsAuthenticated(authState);
+    setUserRole(role);
+
+    if (authState && role) {
       if (role === 'admin') {
-        setIsAdmin(true);
-        navigate('/home'); 
+        navigate('/home');
       } else if (role === 'product-manager') {
-        setIsPm(true);
-        navigate('/pmDashboard'); 
+        navigate('/pmDashboard');
       } else if (role === 'employee') {
-        setIsEmp(true);
         navigate('/empDashboard');
       }
     }
-  }, []);  
-
+  }, [navigate]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,6 +37,16 @@ const App = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('role');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+    setUserRole(null);
+    navigate('/auth');
+  };
+
   return (
     <div className="App">
       {showWelcome ? (
@@ -50,9 +55,8 @@ const App = () => {
         <>
           <Header
             isAuthenticated={isAuthenticated}
-            isAdmin={isAdmin}
-            isPm={isPm}
-            isEmp={isEmp}
+            userRole={userRole}
+            onLogout={handleLogout}
           />
           <ProjectRoutes />
           <Footer />
@@ -68,22 +72,12 @@ const WelcomeScreen = () => (
   </div>
 );
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, userRole, onLogout }) => {
   const [showSignUpOptions, setShowSignUpOptions] = useState(false);
-  const navigate = useNavigate();
 
   const toggleSignUpOptions = () => {
     setShowSignUpOptions(!showSignUpOptions);
   };
-
-  const handleLogout = () => {
-    localStorage.removeItem('role');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('token');
-    navigate('/auth'); 
-  };
-
-  console.log(isAuthenticated)
 
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-dark">
@@ -108,18 +102,19 @@ const Header = ({ isAuthenticated }) => {
                 Contact us
               </Link>
             </li>
-            {isAuthenticated ? (
-              <li className="nav-item">
-                <button
-                  className="btn nav-link"
-                  onClick={handleLogout}
-                  style={{ color: 'white' }}
-                >
-                  Log Out
-                </button>
-              </li>
-            ) : (
-              <>
+
+                <li className="nav-item">
+                  <button
+                    className="btn nav-link"
+                    onClick={onLogout}
+                    style={{ color: 'white' }}
+                  >
+                    Log Out
+                  </button>
+                </li>
+          
+          
+             
                 <li className="nav-item">
                   <Link className="nav-link" to="/auth" style={{ color: 'white' }}>
                     Sign In
@@ -148,15 +143,14 @@ const Header = ({ isAuthenticated }) => {
                     </div>
                   )}
                 </li>
-              </>
-            )}
+          
+           
           </ul>
         </div>
       </div>
     </header>
   );
 };
-
 
 const Footer = () => (
   <footer className="bg-dark text-white text-center py-3">

@@ -14,6 +14,7 @@ const Login = () => {
   const { setCurrentUser } = useAuth();
   const [errors, setErrors] = useState({});
   const [showSignUpOptions, setShowSignUpOptions] = useState(false);
+  const [isAuthenticated,setIsAuthenticated]=useState(false);
 
   const toggleSignUpOptions = () => {
     setShowSignUpOptions(!showSignUpOptions);
@@ -44,18 +45,23 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
-      //if(email!='emp@Gmail.com' || email!='pm@Gmail.com')
-     // {
+     if(res.status==200){
+      setIsAuthenticated(true);
+      console.log(setIsAuthenticated)
+      localStorage.setItem("authenticated",isAuthenticated);
+     }
       setCurrentUser(res.data.userId);
       setLoading(false);
-     // window.location.href = "/home";
-     // }
-     if(res.data.userId==='emp')
+    
+     if(res.data.role==='employee')
       {
       window.location.href = "/empDashboard";
       }
-      
-      else if(res.data.userId==='pm')
+      else if(res.data.role=="admin"){
+        window.location.href = "/Dashboard";
+
+      }
+      else if(res.data.userId==='product-manager')
         {
         window.location.href = "/pmDashboard";
         }

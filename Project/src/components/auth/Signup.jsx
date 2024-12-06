@@ -36,7 +36,15 @@ const Signup = () => {
       localStorage.setItem("role",res.data.role);
       setCurrentUser(res.data.userId);
       setLoading(false);
-      window.location.href = "/";
+      if (res.data.role === 'employee') {
+        window.location.href = "/empDashboard";
+      } else if (res.data.role === "admin") {
+        window.location.href = "/home";
+      } else if (res.data.role === 'product-manager') {
+        window.location.href = "/pmDashboard";
+      } else {
+        window.location.href = "/"; // Optional fallback for unknown roles
+      }
     } catch (err) {
       console.error(err);
       alert("Signup Failed!");
