@@ -20,22 +20,19 @@ import EmpDashboard from "./components/empDashboard/EmpDashboard";
 const ProjectRoutes = () => {
   const { currentUser, setCurrentUser } = useAuth();
   const navigate = useNavigate();
-
+  const publicPaths = ["/", "/about", "/contact-us", "/auth", "/signup"];
+  
   useEffect(() => {
-    const userIdFromStorage = localStorage.getItem('userId');
+    const userIdFromStorage = localStorage.getItem("userId");
 
-    if (userIdFromStorage && !currentUser) {
+    if (!userIdFromStorage) {
+      // If not logged in, allow access only to public paths
+      if (!publicPaths.includes(window.location.pathname)) {
+        navigate("/auth");
+      }
+    } else if (!currentUser) {
+      // If logged in, but currentUser is not set, update the currentUser state
       setCurrentUser(userIdFromStorage);
-    }
-
-    // If no userId in localStorage, redirect to login page
-    if (!userIdFromStorage && !["/auth", "/signup"].includes(window.location.pathname)) {
-      navigate("/auth");
-    }
-
-    // If user is already logged in and on /auth, redirect to home
-    if (userIdFromStorage && window.location.pathname === "/auth") {
-      navigate("/home");
     }
   }, [currentUser, navigate, setCurrentUser]);
 
