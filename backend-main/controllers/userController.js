@@ -77,7 +77,7 @@ async function login(req, res) {
     const token = jwt.sign({ id: user._id ,role:user.role}, process.env.JWT_SECRET_KEY, {
       expiresIn: "1h",
     });
-    res.json({ token, userId: user._id });
+    res.json({ token, userId: user._id,role:user.role });
   } catch (err) {
     console.error("Error during login : ", err.message);
     res.status(500).send("Server error!");

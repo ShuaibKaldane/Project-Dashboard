@@ -45,6 +45,7 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
+      console.log(res.data)
      if(res.status==200){
       setIsAuthenticated(true);
       console.log(setIsAuthenticated)
@@ -53,21 +54,16 @@ const Login = () => {
       setCurrentUser(res.data.userId);
       setLoading(false);
     
-     if(res.data.role==='employee')
-      {
-      window.location.href = "/empDashboard";
-      }
-      else if(res.data.role=="admin"){
-        window.location.href = "/Dashboard";
-
-      }
-      else if(res.data.userId==='product-manager')
-        {
-        window.location.href = "/pmDashboard";
-        }
-      else{
+      if (res.data.role === 'employee') {
+        window.location.href = "/empDashboard";
+      } else if (res.data.role === "admin") {
         window.location.href = "/home";
+      } else if (res.data.role === 'product-manager') {
+        window.location.href = "/pmDashboard";
+      } else {
+        window.location.href = "/"; 
       }
+     
     } catch (err) {
       console.error(err);
       alert("Login Failed!");
