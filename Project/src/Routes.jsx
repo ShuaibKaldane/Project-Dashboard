@@ -30,10 +30,7 @@ const ProjectRoutes = () => {
     if (!userIdFromStorage && !["/auth", "/signup"].includes(window.location.pathname)) {
       navigate("/auth");
     }
-    // If user is already logged in and on /auth, redirect to home
-    if (userIdFromStorage && window.location.pathname === "/auth") {
-      navigate("/home");
-    }
+    
   }, [currentUser, navigate, setCurrentUser]);
 
   let element = useRoutes([
