@@ -74,10 +74,24 @@ const WelcomeScreen = () => (
 
 const Header = ({ isAuthenticated, userRole, onLogout }) => {
   const [showSignUpOptions, setShowSignUpOptions] = useState(false);
+  const role=localStorage.getItem('role');
+
 
   const toggleSignUpOptions = () => {
     setShowSignUpOptions(!showSignUpOptions);
   };
+
+  const handleTo=()=>{
+    if (role=="admin"){
+      navigate('/home')
+    }
+    else if(role==="product-manager"){
+      navigate('/pmDashboard')
+    }
+    else{
+      navigate('/empDashboard')
+    }
+  }
 
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-dark">
@@ -92,6 +106,25 @@ const Header = ({ isAuthenticated, userRole, onLogout }) => {
                 Home
               </Link>
             </li>
+
+            <li className="nav-item">
+  {role && (
+    <Link
+      className="nav-link"
+      to={
+        role === 'admin'
+          ? '/home'
+          : role === 'product-manager'
+          ? '/pmDashboard'
+          : '/empDashboard'
+      }
+      style={{ color: 'white' }}
+    >
+      Dashboard
+    </Link>
+  )}
+</li>
+
             <li className="nav-item">
               <Link className="nav-link" to="/about" style={{ color: 'white' }}>
                 About us

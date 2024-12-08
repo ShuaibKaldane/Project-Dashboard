@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProjectRoutes from './Routes';
 
 const Homescreen = () => {
@@ -13,6 +13,7 @@ const Homescreen = () => {
   // Check authentication status on page load
   useEffect(() => {
     const userIdFromStorage = localStorage.getItem('userId');
+    const role=localStorage.getItem('role');
     if (userIdFromStorage) {
       setIsAuthenticated(true);
   
@@ -64,10 +65,25 @@ const WelcomeScreen = () => (
 
 const Header = ({ isAuthenticated }) => { // Accept isAuthenticated as prop
   const [showSignUpOptions, setShowSignUpOptions] = useState(false);
+  const role=localStorage.getItem('role');
+  console.log("role is here",role);
+  const navigate=useNavigate()
 
   const toggleSignUpOptions = () => {
     setShowSignUpOptions(!showSignUpOptions);
   };
+
+  const handleTo=()=>{
+    if (role=="admin"){
+      navigate('/home')
+    }
+    else if(role==="product-manager"){
+      navigate('/pmDashboard')
+    }
+    else{
+      navigate('/empDashboard')
+    }
+  }
 
   return (
     <header className="navbar navbar-expand-lg navbar-light bg-light">
@@ -78,6 +94,16 @@ const Header = ({ isAuthenticated }) => { // Accept isAuthenticated as prop
             <li className="nav-item">
               <Link className="nav-link" to="/">Home</Link>
             </li>
+            {
+              role?
+              <>
+              <li className="nav-item">
+              <Link className="nav-link" to={handleTo}>Dashboard</Link>
+            </li>
+            </>
+            :
+            <li></li>
+            }
             <li className="nav-item">
               <Link className="nav-link" to="/about">About us</Link>
             </li>
