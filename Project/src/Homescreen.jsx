@@ -24,7 +24,7 @@ const Homescreen = () => {
         setIsEmp(true); // Set employee state if user is employee
       }
     }
-  }, []); // Empty dependency array to run only once when the component mounts
+  }, []); //This is home page
   
 
   // Timer to hide the welcome screen after 3 seconds
