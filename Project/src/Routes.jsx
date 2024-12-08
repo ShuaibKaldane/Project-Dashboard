@@ -15,6 +15,7 @@ import Homescreen from "./Homescreen";
 import AboutIssues from "./components/issues/AboutIssues";
 import PmDashboard from "./components/pmDashboard/pmDashboard";
 import EmpDashboard from "./components/empDashboard/EmpDashboard";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 
 const ProjectRoutes = () => {
@@ -36,10 +37,10 @@ const ProjectRoutes = () => {
   let element = useRoutes([
     {
       path: "/about",
-      element:  <About />
+      element: <About />,
     },
     {
-      path: "/Login",
+      path: "/login",
       element: <Login />,
     },
     {
@@ -58,7 +59,6 @@ const ProjectRoutes = () => {
       path: "/contact-us",
       element: <ContactUsPage />,
     },
-   
     {
       path: "/add-issue",
       element: <AddIssue />,
@@ -81,17 +81,18 @@ const ProjectRoutes = () => {
     },
     {
       path: "/home",
-      element: <Dashboard />,
+      element: <ProtectedRoutes roleRequired="admin" element={<Dashboard />} />,
     },
     {
       path: "/pmDashboard",
-      element: <PmDashboard />,
+      element: <ProtectedRoutes roleRequired="product-manager" element={<PmDashboard />} />,
     },
     {
       path: "/empDashboard",
-      element: <EmpDashboard />,
+      element: <ProtectedRoutes roleRequired="employee" element={<EmpDashboard />} />,
     },
   ]);
+  
 
   return element;
 };

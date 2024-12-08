@@ -50,6 +50,7 @@ const Login = () => {
       setIsAuthenticated(true);
       console.log(setIsAuthenticated)
       localStorage.setItem("authenticated",isAuthenticated);
+      localStorage.setItem("role",res.data.role);
      }
       setCurrentUser(res.data.userId);
       setLoading(false);
